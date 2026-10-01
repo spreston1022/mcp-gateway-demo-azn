@@ -48,9 +48,16 @@ elicitation). Foundry agents don't support this and stall silently.
 keep the standard response and their native prompt.
 
 Known limitation: Foundry caches the MCP tool list for a long time (over 20
-minutes observed, across new chats and agent versions). After connecting,
-Foundry keeps offering `connect_linear` until its cache refreshes; calling it
-returns "Linear is connected. Start a new conversation…".
+minutes observed, surviving new chats and new agent versions). After
+connecting, Foundry keeps offering `connect_linear`; calling it returns
+"Linear is connected. Start a new conversation…".
+
+To refresh Foundry's tool list, detach and reattach the tool: in the agent's
+Tools section choose the tool's menu, then **Remove**, and **Save**; then open
+**Tools → linear-via-zuplo-gateway-b → Use in an agent → linear-assistant**.
+This keeps the OAuth connection, so no secret is needed. Tested end to end:
+connect link shown in chat, Linear connected, tool reattached, real tools
+listed.
 
 ## Test scripts
 
