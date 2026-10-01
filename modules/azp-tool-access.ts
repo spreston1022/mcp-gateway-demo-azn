@@ -35,31 +35,60 @@ export const PROFILES: Record<string, string[]> = {
 };
 
 /**
- * Returns the Linear tools the calling app may use, from the Entra `azp`
- * claim: the client ID of the app that requested the user's token (for
- * example, the Foundry agent). The user's own Linear permissions still apply
- * upstream; this caps what each app can do on their behalf.
- *
- * AZP_TOOL_PROFILES maps client IDs to profile names, as JSON:
- * {"<agent-client-id>": "read-only"}. Unknown apps get no tools.
+ * Which caller identity a route keys on:
+ * - "azp" (Gateway B): the Entra `azp` claim, the app that requested the
+ *   user's token. Profiles come from AZP_TOOL_PROFILES.
+ * - "clientId" (Gateway A): the gateway-issued token's OAuth client ID. For
+ *   CIMD clients that's the publisher's metadata URL, stable across users; for
+ *   DCR clients it's random per registration, so all DCR clients share the
+ *   "dcr:*" entry. Profiles come from CLIENT_TOOL_PROFILES.
  */
-export function allowedTools(request: ZuploRequest, context: ZuploContext): string[] {
-  const azp = request.user?.data?.azp;
+export type CallerSource = "azp" | "clientId";
+
+const SOURCES: Record<CallerSource, { claim: string; env: string }> = {
+  azp: { claim: "azp", env: "AZP_TOOL_PROFILES" },
+  clientId: { claim: "clientId", env: "CLIENT_TOOL_PROFILES" },
+};
+
+/**
+ * Returns the Linear tools the calling app may use. The user's own Linear
+ * permissions still apply upstream; this caps what each app can do on their
+ * behalf. Profile maps are JSON, e.g. {"<client-id>": "read-only"}. Unknown
+ * apps get no tools.
+ */
+export function allowedTools(
+  request: ZuploRequest,
+  context: ZuploContext,
+  source: CallerSource = "azp",
+): string[] {
+  const { claim, env } = SOURCES[source];
+  const caller = request.user?.data?.[claim];
   let profiles: Record<string, string> = {};
   try {
-    profiles = JSON.parse(environment.AZP_TOOL_PROFILES ?? "{}");
+    profiles = JSON.parse(environment[env] ?? "{}");
   } catch {
-    context.log.error("AZP_TOOL_PROFILES is not valid JSON; allowing no tools");
+    context.log.error(`${env} is not valid JSON; allowing no tools`);
   }
-  const profile = typeof azp === "string" ? profiles[azp] : undefined;
-  context.log.info({ event: "mcp_azp_tool_access", azp: azp ?? null, profile: profile ?? null });
+  let profile = typeof caller === "string" ? profiles[caller] : undefined;
+  if (profile === undefined && typeof caller === "string" && caller.startsWith("dcr:")) {
+    profile = profiles["dcr:*"];
+  }
+  context.log.info({ event: "mcp_caller_tool_access", source, caller: caller ?? null, profile: profile ?? null });
   return profile ? (PROFILES[profile] ?? []) : [];
 }
 
-// Capability filter resolver (accessControl.mode "function").
+// Capability filter resolver for Gateway B (accessControl.mode "function").
 export default function azpToolAccess(
   request: ZuploRequest,
   context: ZuploContext,
 ): AllowedCapabilities {
-  return { tools: allowedTools(request, context) };
+  return { tools: allowedTools(request, context, "azp") };
+}
+
+// Capability filter resolver for Gateway A.
+export function clientIdToolAccess(
+  request: ZuploRequest,
+  context: ZuploContext,
+): AllowedCapabilities {
+  return { tools: allowedTools(request, context, "clientId") };
 }

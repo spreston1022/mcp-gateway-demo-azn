@@ -1,5 +1,5 @@
 import type { ZuploContext, ZuploRequest } from "@zuplo/runtime";
-import { allowedTools } from "./azp-tool-access";
+import { allowedTools, type CallerSource } from "./azp-tool-access";
 
 /**
  * Filters `tools/list` responses that arrive as server-sent events.
@@ -12,6 +12,7 @@ import { allowedTools } from "./azp-tool-access";
 export default async function sseToolsListFilter(
   request: ZuploRequest,
   context: ZuploContext,
+  options: { source?: CallerSource } = {},
 ) {
   let isToolsList = false;
   try {
@@ -23,7 +24,7 @@ export default async function sseToolsListFilter(
   }
   if (!isToolsList) return request;
 
-  const allowed = new Set(allowedTools(request, context));
+  const allowed = new Set(allowedTools(request, context, options.source ?? "azp"));
   context.addResponseSendingHook(async (response) => {
     if (!response.headers.get("content-type")?.includes("text/event-stream")) {
       return response;

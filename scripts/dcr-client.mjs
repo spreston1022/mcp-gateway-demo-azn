@@ -10,7 +10,10 @@ import { exec } from "node:child_process";
 
 const gateway = process.env.GATEWAY_URL ?? "http://localhost:9000";
 const mcpUrl = `${gateway}/mcp-a/linear`;
-const redirectUri = "http://localhost:8401/callback";
+// CIMD_CLIENT_ID=<metadata document URL> skips registration and uses Client
+// ID Metadata Documents instead of DCR.
+const cimdClientId = process.env.CIMD_CLIENT_ID;
+const redirectUri = cimdClientId ? "http://localhost:8402/callback" : "http://localhost:8401/callback";
 const b64url = (b) => b.toString("base64url");
 const getJson = async (url, init) => {
   const res = await fetch(url, init);
@@ -26,8 +29,8 @@ const asPath = new URL(asUrl).pathname.replace(/\/$/, "");
 const as = await getJson(`${new URL(asUrl).origin}/.well-known/oauth-authorization-server${asPath}`);
 console.error(`Authorization server: ${as.issuer}\nRegistration endpoint: ${as.registration_endpoint}`);
 
-// 2. Dynamic Client Registration (RFC 7591)
-const client = await getJson(as.registration_endpoint, {
+// 2. Client registration: CIMD (the client_id is a metadata URL) or DCR
+const client = cimdClientId ? { client_id: cimdClientId } : await getJson(as.registration_endpoint, {
   method: "POST",
   headers: { "content-type": "application/json" },
   body: JSON.stringify({
@@ -38,7 +41,7 @@ const client = await getJson(as.registration_endpoint, {
     token_endpoint_auth_method: "none",
   }),
 });
-console.error(`Registered client_id: ${client.client_id}`);
+console.error(`${cimdClientId ? "CIMD" : "Registered"} client_id: ${client.client_id}`);
 
 // 3. Authorization code + PKCE
 const verifier = b64url(randomBytes(32));
@@ -61,7 +64,7 @@ const code = await new Promise((resolve, reject) => {
     server.close();
     if (q.get("state") !== state) return reject(new Error("state mismatch"));
     q.get("code") ? resolve(q.get("code")) : reject(new Error(q.get("error_description") ?? q.get("error") ?? "no code"));
-  }).listen(8401);
+  }).listen(new URL(redirectUri).port);
   console.error("Opening browser to sign in...");
   exec(`open "${authUrl}"`);
 });

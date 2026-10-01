@@ -9,7 +9,7 @@
       "get,post": {
         "operationId": "linear-gateway-a",
         "summary": "Linear MCP (Gateway A: gateway-issued OAuth with DCR)",
-        "description": "MCP clients register and sign in through the gateway's own OAuth authorization server (DCR and CIMD), which delegates browser login to Entra ID. Each user connects their own Linear account once; the gateway stores and refreshes that token.",
+        "description": "MCP clients register and sign in through the gateway's own OAuth authorization server (DCR and CIMD), which delegates browser login to Entra ID. Linear tools are limited per app by the OAuth client ID: CIMD clients by their metadata URL, all DCR clients by a shared 'dcr:*' profile. Each user connects their own Linear account once; the gateway stores and refreshes that token.",
         "x-zuplo-route": {
           "corsPolicy": "none",
           "handler": {
@@ -22,6 +22,8 @@
           "policies": {
             "inbound": [
               "gateway-a-entra-oauth",
+              "gateway-a-client-tool-filter",
+              "gateway-a-sse-tools-list-filter",
               "linear-token-exchange"
             ]
           }
@@ -50,6 +52,24 @@
               "gateway-b-sse-tools-list-filter",
               "linear-token-exchange"
             ]
+          }
+        }
+      }
+    },
+    "/clients/demo-agent.json": {
+      "get": {
+        "operationId": "cimd-demo-agent",
+        "summary": "Client ID Metadata Document for the demo agent",
+        "description": "Public CIMD document. Its URL is the demo agent's OAuth client_id on Gateway A.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/cimd-demo-client)",
+            "options": {}
+          },
+          "policies": {
+            "inbound": []
           }
         }
       }
