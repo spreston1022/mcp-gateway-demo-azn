@@ -59,10 +59,21 @@ Gateway A issues its own tokens, so there is no Entra `azp`. Instead
 
 ## Limits by user and app together on Gateway A
 
-A tool is available only if both the user's Entra app roles and the calling
-app's profile allow it. `USER_ROLE_PROFILES` maps roles on the Gateway A app
-registration (`Linear.Read`, `Linear.Write`) to profiles. Users with no mapped
-role aren't narrowed by role; apps without a profile aren't narrowed by app.
+Gateway A uses two of Zuplo's MCP Capability Filter policies in a row, so a
+tool must pass both:
+
+1. `gateway-a-user-role-filter` (`rolesAndGroups` mode) checks the user's
+   Entra app roles from the `roles` claim. Each of Linear's 81 tools is tagged
+   with roles: read tools `Linear.Read`, `Linear.Write`, `Linear.Admin`; the
+   three save tools `Linear.Write`, `Linear.Admin`; everything else
+   `Linear.Admin`. A user with no role gets no tools.
+2. `gateway-a-client-tool-filter` (`function` mode) maps the app's `clientId`
+   to a profile from `CLIENT_TOOL_PROFILES` (resolver `clientIdToolAccess` in
+   `modules/azp-tool-access.ts`). Apps without a profile keep all 81.
+
+The filters only rewrite JSON, and Linear answers `tools/list` with SSE, so the
+outbound policy `gateway-a-sse-to-json` converts single-message SSE responses
+to JSON first. Blocked calls return `-32601 Method not found`.
 
 | App (profile) | User with `Linear.Read` | User with `Linear.Write` |
 |---|---|---|
@@ -72,8 +83,7 @@ role aren't narrowed by role; apps without a profile aren't narrowed by app.
 | Unlisted client | 15 | 18 |
 
 claude.ai's `client_id` is `https://claude.ai/oauth/mcp-oauth-client-metadata`.
-A blocked call returns `-32601 Tool not available to this user or app`. Logs
-show `mcp_user_tool_access` (roles, profiles) and `mcp_caller_tool_access`.
+Logs show `mcp_caller_tool_access` (caller, profile).
 
 Roles reach the gateway when it creates its browser session (cookie
 `zuplo_mcp_session`) from the Entra ID token. A role change takes effect only

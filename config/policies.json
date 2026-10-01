@@ -15,14 +15,647 @@
       }
     },
     {
+      "name": "gateway-a-user-role-filter",
+      "policyType": "mcp-capability-filter-inbound",
+      "handler": {
+        "export": "McpCapabilityFilterInboundPolicy",
+        "module": "$import(@zuplo/runtime/mcp-gateway)",
+        "options": {
+          "tools": [
+            {
+              "name": "get_attachment",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "prepare_attachment_upload",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "create_attachment_from_upload",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "create_attachment",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "delete_attachment",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_agent_skills",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_agent_skill",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_comments",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_comment",
+              "roles": [
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "delete_comment",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_cycles",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_custom_views",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_document",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_documents",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_document",
+              "roles": [
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "extract_images",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_issue",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_issues",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_issue",
+              "roles": [
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_issue_statuses",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_issue_status",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_issue_labels",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_issue_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "create_issue_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "retire_issue_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "restore_issue_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_projects",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_project",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_project",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_project_labels",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "retire_project_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "restore_project_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_project_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_release_pipelines",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_releases",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_release",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_release",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_release_notes",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_release_note",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_release_note",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "share_issue",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "unshare_issue",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_milestones",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_milestone",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_milestone",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_notifications",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "mark_notification",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_teams",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_team",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_triage_responsibility",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_templates",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_template",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_users",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_user",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_workspace",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "search_documentation",
+              "roles": [
+                "Linear.Read",
+                "Linear.Write",
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_diff",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_diffs",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_diff_threads",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_diff_comment",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "resolve_diff_thread",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "delete_diff_comment",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "submit_diff_review",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "update_diff",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "merge_diff",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_customers",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_customer",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "delete_customer",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_customer_need",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "delete_customer_need",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_initiatives",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_initiative",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_initiative",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "list_initiative_labels",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_initiative_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "create_initiative_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "retire_initiative_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "restore_initiative_label",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "get_status_updates",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "save_status_update",
+              "roles": [
+                "Linear.Admin"
+              ]
+            },
+            {
+              "name": "delete_status_update",
+              "roles": [
+                "Linear.Admin"
+              ]
+            }
+          ],
+          "accessControl": {
+            "mode": "rolesAndGroups",
+            "roleClaim": "roles"
+          }
+        }
+      }
+    },
+    {
       "name": "gateway-a-client-tool-filter",
-      "policyType": "custom-code-inbound",
+      "policyType": "mcp-capability-filter-inbound",
+      "handler": {
+        "export": "McpCapabilityFilterInboundPolicy",
+        "module": "$import(@zuplo/runtime/mcp-gateway)",
+        "options": {
+          "tools": [
+            "get_attachment",
+            "prepare_attachment_upload",
+            "create_attachment_from_upload",
+            "create_attachment",
+            "delete_attachment",
+            "list_agent_skills",
+            "get_agent_skill",
+            "list_comments",
+            "save_comment",
+            "delete_comment",
+            "list_cycles",
+            "list_custom_views",
+            "get_document",
+            "list_documents",
+            "save_document",
+            "extract_images",
+            "get_issue",
+            "list_issues",
+            "save_issue",
+            "list_issue_statuses",
+            "get_issue_status",
+            "list_issue_labels",
+            "save_issue_label",
+            "create_issue_label",
+            "retire_issue_label",
+            "restore_issue_label",
+            "list_projects",
+            "get_project",
+            "save_project",
+            "list_project_labels",
+            "retire_project_label",
+            "restore_project_label",
+            "save_project_label",
+            "list_release_pipelines",
+            "list_releases",
+            "get_release",
+            "save_release",
+            "list_release_notes",
+            "get_release_note",
+            "save_release_note",
+            "share_issue",
+            "unshare_issue",
+            "list_milestones",
+            "get_milestone",
+            "save_milestone",
+            "get_notifications",
+            "mark_notification",
+            "list_teams",
+            "get_team",
+            "get_triage_responsibility",
+            "list_templates",
+            "get_template",
+            "list_users",
+            "get_user",
+            "get_workspace",
+            "search_documentation",
+            "get_diff",
+            "list_diffs",
+            "get_diff_threads",
+            "save_diff_comment",
+            "resolve_diff_thread",
+            "delete_diff_comment",
+            "submit_diff_review",
+            "update_diff",
+            "merge_diff",
+            "list_customers",
+            "save_customer",
+            "delete_customer",
+            "save_customer_need",
+            "delete_customer_need",
+            "list_initiatives",
+            "get_initiative",
+            "save_initiative",
+            "list_initiative_labels",
+            "save_initiative_label",
+            "create_initiative_label",
+            "retire_initiative_label",
+            "restore_initiative_label",
+            "get_status_updates",
+            "save_status_update",
+            "delete_status_update"
+          ],
+          "accessControl": {
+            "mode": "function",
+            "identifier": {
+              "module": "$import(./modules/azp-tool-access)",
+              "export": "clientIdToolAccess"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "gateway-a-sse-to-json",
+      "policyType": "custom-code-outbound",
       "handler": {
         "export": "default",
-        "module": "$import(./modules/caller-tool-filter)",
-        "options": {
-          "source": "clientId"
-        }
+        "module": "$import(./modules/sse-to-json-outbound)",
+        "options": {}
       }
     },
     {

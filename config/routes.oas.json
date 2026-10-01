@@ -22,8 +22,12 @@
           "policies": {
             "inbound": [
               "gateway-a-entra-oauth",
+              "gateway-a-user-role-filter",
               "gateway-a-client-tool-filter",
               "linear-token-exchange"
+            ],
+            "outbound": [
+              "gateway-a-sse-to-json"
             ]
           }
         }

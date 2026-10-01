@@ -125,6 +125,7 @@ const result =
     : await mcp(init.sessionId, 2, "tools/list", {});
 if (cmd !== "call" && result.data?.result?.tools) {
   console.log(`${result.data.result.tools.length} tools visible through Gateway A`);
+  if (process.env.PRINT_TOOLS) for (const t of result.data.result.tools) console.log(`  - ${t.name}`);
 } else {
   console.log(JSON.stringify(result.data, null, 2).slice(0, 2000));
 }

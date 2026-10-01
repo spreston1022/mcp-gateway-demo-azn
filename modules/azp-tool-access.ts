@@ -3,6 +3,7 @@ import {
   type ZuploContext,
   type ZuploRequest,
 } from "@zuplo/runtime";
+import type { AllowedCapabilities } from "@zuplo/runtime/mcp-gateway";
 
 const READ_TOOLS = [
   // Synthetic tool from connect-fallback-inbound, shown only until the user
@@ -105,4 +106,14 @@ export function allowedTools(
   });
   if (profile === undefined) return null;
   return PROFILES[profile] ?? [];
+}
+
+// Capability filter resolver for Gateway A (accessControl.mode "function").
+// Apps without a profile get {} and keep the filter's full tool catalog.
+export function clientIdToolAccess(
+  request: ZuploRequest,
+  context: ZuploContext,
+): AllowedCapabilities {
+  const tools = allowedTools(request, context, "clientId");
+  return tools === null ? {} : { tools };
 }
