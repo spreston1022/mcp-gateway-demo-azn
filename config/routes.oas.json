@@ -1,9 +1,75 @@
 {
-  "openapi": "3.1.0",
   "info": {
+    "title": "Echo API",
     "version": "1.0.0",
-    "title": "MCP Gateway Demo"
+    "description": "A simple echo endpoint used for testing and demonstration purposes.\nReturns the full request details including headers, query parameters, and body.\nHosted at echo.zuplo.io — commonly used as a mock backend in Zuplo gateway demos.\n"
   },
+  "openapi": "3.1.0",
+  "components": {
+    "schemas": {
+      "EchoResponse": {
+        "type": "object",
+        "description": "Full echo of the incoming request",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "HTTP method of the request",
+            "example": "GET"
+          },
+          "url": {
+            "type": "string",
+            "description": "Full URL of the request",
+            "example": "https://echo.zuplo.io/path-10"
+          },
+          "headers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "All request headers as key-value pairs",
+            "example": {
+              "authorization": "Bearer zpka_abc123",
+              "content-type": "application/json"
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Query string parameters as key-value pairs",
+            "example": {
+              "foo": "bar"
+            }
+          },
+          "body": {
+            "description": "Request body — null for GET requests",
+            "nullable": true,
+            "type": "null"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Bearer token — your Zuplo API key"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://echo.zuplo.io",
+      "description": "Zuplo echo service"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
   "paths": {
     "/mcp-a/linear": {
       "get,post": {
@@ -59,6 +125,48 @@
             "outbound": [
               "gateway-b-sse-to-json"
             ]
+          }
+        }
+      }
+    },
+    "/path-10": {
+      "get": {
+        "summary": "Echo a GET request",
+        "description": "Returns the full details of the incoming GET request as JSON — headers, query parameters, URL, and method.",
+        "operationId": "echo-get",
+        "parameters": [
+          {
+            "name": "any",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Any query parameters are echoed back in the response"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Echo response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EchoResponse"
+                },
+                "example": {
+                  "method": "GET",
+                  "url": "https://echo.zuplo.io/path-10?foo=bar",
+                  "headers": {
+                    "authorization": "Bearer zpka_abc123",
+                    "user-agent": "curl/7.88.1",
+                    "accept": "*/*"
+                  },
+                  "query": {
+                    "foo": "bar"
+                  },
+                  "body": null
+                }
+              }
+            }
           }
         }
       }
