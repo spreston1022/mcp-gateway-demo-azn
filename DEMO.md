@@ -14,7 +14,7 @@ gateway.
 | Client registration | Dynamic Client Registration (DCR) or CIMD with the gateway | Pre-registered app in Entra ID |
 | Token the client sends | Gateway-issued, opaque | Entra ID v2 access token |
 | Browser login | Gateway delegates to Entra | Entra directly |
-| Tool limits per calling app | Only by `request.user.data.clientId`: random per DCR registration, stable for CIMD clients (untested) | Yes, by the token's `azp` claim |
+| Tool limits per calling app | Yes, by the OAuth `client_id`: per app for CIMD clients, one shared profile for all DCR clients | Yes, by the token's `azp` claim |
 | Inbound policy | `mcp-entra-oauth-inbound` | `open-id-jwt-auth-inbound` |
 
 ## Agents act with narrower permissions than the user
@@ -37,6 +37,32 @@ through the gateway.
 
 `sse-tools-list-filter` exists because the capability filter only rewrites
 JSON list responses and Linear always answers `tools/list` with SSE.
+
+## Per-app limits on Gateway A with CIMD
+
+Gateway A issues its own tokens, so there is no Entra `azp`. Instead
+`gateway-a-client-tool-filter` keys on `request.user.data.clientId`, mapped in
+`CLIENT_TOOL_PROFILES`.
+
+- CIMD clients use an HTTPS URL to their metadata document as `client_id`. The
+  URL is the same for every user and install, so it identifies the app. The
+  demo document is `clients/demo-agent.json`, served from GitHub raw (the
+  gateway can't fetch a document from its own hostname).
+- DCR clients get a random `dcr:…` ID per registration, so they can't be told
+  apart. They all share the `dcr:*` profile.
+
+| Caller | Linear tools (tested live) |
+|---|---|
+| Demo Agent via CIMD (GitHub URL) | 18: read-write profile |
+| Any DCR client | 15: read-only profile |
+| Unlisted CIMD client | None |
+
+Demo: `CIMD_CLIENT_ID=<metadata URL> node scripts/dcr-client.mjs tools/list`
+versus the same command without `CIMD_CLIENT_ID`.
+
+Changing a variable needs a deploy with a new file tree; an empty commit
+reused the old build and kept the old value. When no profile matches, the
+`mcp_caller_tool_access` log lists `configuredCallers`.
 
 ## Connecting Linear from clients without URL elicitation
 
@@ -66,7 +92,8 @@ listed.
 - `node scripts/demo-agent.mjs [tools/list | call <tool> '<json>']`: signs in
   through Entra as the Demo Agent and calls Gateway B.
 - `node scripts/dcr-client.mjs [tools/list | call …]`: discovers Gateway A,
-  registers with DCR, signs in, and calls it.
+  registers with DCR (or uses CIMD when `CIMD_CLIENT_ID` is set), signs in,
+  and calls it.
 
 Set `GATEWAY_URL` to the live gateway; the default is `http://localhost:9000`.
 
