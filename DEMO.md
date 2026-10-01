@@ -54,12 +54,29 @@ Gateway A issues its own tokens, so there is no Entra `azp`. Instead
 - DCR clients get a random `dcr:…` ID per registration, so they can't be told
   apart. They all share the `dcr:*` profile.
 
-| Caller | Linear tools (tested live) |
-|---|---|
-| claude.ai (`https://claude.ai/oauth/mcp-oauth-client-metadata`) | 15: read-only profile |
-| Demo Agent via CIMD (GitHub URL) | 18: read-write profile |
-| Any DCR client (`dcr:*` entry) | 15: read-only profile |
-| Unlisted client | All 81 (not narrowed) |
+## Limits by user and app together on Gateway A
+
+A tool is available only if both the user's Entra app roles and the calling
+app's profile allow it. `USER_ROLE_PROFILES` maps roles on the Gateway A app
+registration (`Linear.Read`, `Linear.Write`) to profiles. Users with no mapped
+role aren't narrowed by role; apps without a profile aren't narrowed by app.
+
+| App (profile) | User with `Linear.Read` | User with `Linear.Write` |
+|---|---|---|
+| claude.ai (`issues-read`) | 4 | 4 |
+| Demo Agent via CIMD (`read-write`) | 15 (tested) | 18 (tested earlier, no role) |
+| Any DCR client (`dcr:*`, `read-only`) | 15 | 15 |
+| Unlisted client | 15 | 18 |
+
+claude.ai's `client_id` is `https://claude.ai/oauth/mcp-oauth-client-metadata`.
+A blocked call returns `-32601 Tool not available to this user or app`. Logs
+show `mcp_user_tool_access` (roles, profiles) and `mcp_caller_tool_access`.
+
+Roles reach the gateway when it creates its browser session (cookie
+`zuplo_mcp_session`) from the Entra ID token. A role change takes effect only
+after that session is recreated: clear the gateway site's cookies, or wait
+for the session to expire. Group-based role assignment needs Entra ID P1;
+assigning individual users works on the free tier.
 
 Demo: `CIMD_CLIENT_ID=<metadata URL> node scripts/dcr-client.mjs tools/list`
 versus the same command without `CIMD_CLIENT_ID`.

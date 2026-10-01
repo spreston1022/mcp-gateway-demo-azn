@@ -1,5 +1,5 @@
 import type { ZuploContext, ZuploRequest } from "@zuplo/runtime";
-import { allowedTools, type CallerSource } from "./azp-tool-access";
+import { allowedTools, userAllowedTools, type CallerSource } from "./azp-tool-access";
 
 interface JsonRpcMessage {
   id?: string | number | null;
@@ -8,11 +8,13 @@ interface JsonRpcMessage {
 }
 
 /**
- * Narrows the Linear tools an app may use on the user's behalf.
+ * Narrows the Linear tools available to a request by both the user and the
+ * calling app: a tool is allowed only if the user's roles and the app's
+ * profile both allow it.
  *
- * Apps without a profile pass through untouched and get every tool the user
- * has. Apps with a profile see only its tools in `tools/list`, and calls to
- * any other tool are rejected before they reach Linear.
+ * Users and apps without a profile aren't narrowed, so a request with neither
+ * passes through untouched. Otherwise `tools/list` shows only the allowed
+ * tools, and calls to any other tool are rejected before they reach Linear.
  *
  * This replaces Zuplo's MCP Capability Filter here because that policy can
  * only narrow a fixed tool catalog: with no catalog it doesn't filter at all,
@@ -36,9 +38,12 @@ export default async function callerToolFilter(
   const calls = messages.filter((m) => m?.method === "tools/call");
   if (!isToolsList && calls.length === 0) return request;
 
-  const tools = allowedTools(request, context, options.source ?? "azp");
-  if (tools === null) return request;
-  const allowed = new Set(tools);
+  const appTools = allowedTools(request, context, options.source ?? "azp");
+  const userTools = userAllowedTools(request, context);
+  if (appTools === null && userTools === null) return request;
+  const allowed = new Set(
+    appTools === null ? userTools : userTools === null ? appTools : appTools.filter((t) => userTools.includes(t)),
+  );
 
   const blocked = calls.find((m) => !allowed.has(m.params?.name ?? ""));
   if (blocked) {
@@ -47,7 +52,7 @@ export default async function callerToolFilter(
       JSON.stringify({
         jsonrpc: "2.0",
         id: blocked.id ?? null,
-        error: { code: -32601, message: `Tool not available to this app: ${blocked.params?.name ?? ""}` },
+        error: { code: -32601, message: `Tool not available to this user or app: ${blocked.params?.name ?? ""}` },
       }),
       { status: 200, headers: { "content-type": "application/json" } },
     );

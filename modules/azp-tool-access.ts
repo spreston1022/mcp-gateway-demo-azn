@@ -30,6 +30,8 @@ const READ_TOOLS = [
 export const PROFILES: Record<string, string[]> = {
   "read-only": READ_TOOLS,
   "read-write": [...READ_TOOLS, "save_issue", "save_comment", "save_document"],
+  // Reading issues only, for apps that need less than a read-only user has.
+  "issues-read": ["connect_linear", "list_issues", "get_issue", "list_comments", "list_teams"],
 };
 
 /**
@@ -47,6 +49,28 @@ const SOURCES: Record<CallerSource, { claim: string; env: string }> = {
   azp: { claim: "azp", env: "AZP_TOOL_PROFILES" },
   clientId: { claim: "clientId", env: "CLIENT_TOOL_PROFILES" },
 };
+
+/**
+ * Returns the Linear tools the signed-in user is limited to by their roles, or
+ * null when none of their roles is mapped and they aren't narrowed. Roles come
+ * from the identity provider (on Gateway A, the Entra app roles in the user's
+ * ID token). USER_ROLE_PROFILES maps role to profile, e.g. {"Linear.Read":
+ * "read-only"}. A user with several mapped roles gets the union of them.
+ */
+export function userAllowedTools(request: ZuploRequest, context: ZuploContext): string[] | null {
+  const roles = request.user?.data?.roles;
+  const userRoles = Array.isArray(roles) ? roles.filter((r): r is string => typeof r === "string") : [];
+  let roleProfiles: Record<string, string> = {};
+  try {
+    roleProfiles = JSON.parse(environment.USER_ROLE_PROFILES ?? "{}");
+  } catch {
+    context.log.error("USER_ROLE_PROFILES is not valid JSON; no users are narrowed");
+  }
+  const profiles = userRoles.map((r) => roleProfiles[r]).filter((p): p is string => p !== undefined);
+  context.log.info({ event: "mcp_user_tool_access", roles: userRoles, profiles });
+  if (profiles.length === 0) return null;
+  return [...new Set(profiles.flatMap((p) => PROFILES[p] ?? []))];
+}
 
 /**
  * Returns the Linear tools the calling app is limited to, or null when the app
