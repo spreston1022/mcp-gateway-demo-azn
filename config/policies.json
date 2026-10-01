@@ -1848,6 +1848,30 @@
           }
         }
       }
+    },
+    {
+      "name": "gateway-a-tool-audit",
+      "policyType": "custom-code-inbound",
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/mcp-tool-audit)",
+        "options": {
+          "gateway": "gateway-a",
+          "mcpServer": "linear"
+        }
+      }
+    },
+    {
+      "name": "gateway-b-tool-audit",
+      "policyType": "custom-code-inbound",
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/mcp-tool-audit)",
+        "options": {
+          "gateway": "gateway-b",
+          "mcpServer": "linear"
+        }
+      }
     }
   ]
 }

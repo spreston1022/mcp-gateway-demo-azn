@@ -98,6 +98,26 @@ After changing a variable, an empty-commit deploy kept the old value here;
 a commit with real changes picked it up. When no profile matches, the
 `mcp_caller_tool_access` log lists `configuredCallers`.
 
+## Tool call audit log
+
+Both routes run `gateway-{a,b}-tool-audit` (`modules/mcp-tool-audit.ts`) right
+after authentication. It writes one `mcp_tool_audit` log entry per
+`tools/call`, including calls the tool filters block:
+
+| Field | Contents |
+|---|---|
+| `timestamp`, `requestId`, `durationMs` | When, which request, how long |
+| `gateway`, `mcpServer` | `gateway-a` or `gateway-b`, `linear` |
+| `user` | `sub`, `roles` (Gateway A); also `name`, `oid` from the Entra token (Gateway B) |
+| `agent` | `id` (CIMD URL, `dcr:…`, or Entra `azp`), `kind`, `host` |
+| `tool`, `arguments` | Strings cut at 200 characters, secret-looking keys redacted |
+| `decision` | `allowed`, `denied`, `connect_required` |
+| `outcome` | `success`, `tool_error`, `blocked`, `error`, with `errorCode` |
+
+Approvals happen inside the client (for example Foundry's approval prompt) and
+never reach the gateway, so they aren't logged. The response is read in the
+background with `context.waitUntil`, so logging adds no latency.
+
 ## Connecting Linear from clients without URL elicitation
 
 When a user hasn't connected Linear, the token-exchange policy answers MCP
