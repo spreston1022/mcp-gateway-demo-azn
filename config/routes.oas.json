@@ -55,24 +55,6 @@
           }
         }
       }
-    },
-    "/clients/demo-agent.json": {
-      "get": {
-        "operationId": "cimd-demo-agent",
-        "summary": "Client ID Metadata Document for the demo agent",
-        "description": "Public CIMD document. Its URL is the demo agent's OAuth client_id on Gateway A.",
-        "x-zuplo-route": {
-          "corsPolicy": "none",
-          "handler": {
-            "export": "default",
-            "module": "$import(./modules/cimd-demo-client)",
-            "options": {}
-          },
-          "policies": {
-            "inbound": []
-          }
-        }
-      }
     }
   }
 }

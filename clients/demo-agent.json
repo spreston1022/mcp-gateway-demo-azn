@@ -1,0 +1,8 @@
+{
+  "client_id": "https://raw.githubusercontent.com/spreston1022/mcp-gateway-demo-azn/main/clients/demo-agent.json",
+  "client_name": "Zuplo Demo Agent (CIMD)",
+  "redirect_uris": ["http://localhost:8402/callback"],
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "token_endpoint_auth_method": "none"
+}
