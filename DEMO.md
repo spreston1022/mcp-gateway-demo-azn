@@ -64,8 +64,8 @@ role aren't narrowed by role; apps without a profile aren't narrowed by app.
 | App (profile) | User with `Linear.Read` | User with `Linear.Write` |
 |---|---|---|
 | claude.ai (`issues-read`) | 4 | 4 |
-| Demo Agent via CIMD (`read-write`) | 15 (tested) | 18 (tested earlier, no role) |
-| Any DCR client (`dcr:*`, `read-only`) | 15 | 15 |
+| Demo Agent via CIMD (`read-write`) | 15, writes blocked (tested in prod) | 18 |
+| Any DCR client (`dcr:*`, `read-only`) | 15 (tested in prod) | 15 |
 | Unlisted client | 15 | 18 |
 
 claude.ai's `client_id` is `https://claude.ai/oauth/mcp-oauth-client-metadata`.
