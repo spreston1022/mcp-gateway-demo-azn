@@ -19,24 +19,27 @@ gateway.
 
 ## Agents act with narrower permissions than the user
 
-Gateway B's `gateway-b-azp-tool-filter` (Zuplo's MCP Capability Filter policy,
-resolver in `modules/azp-tool-access.ts`) maps each calling app to a tool
-profile. `AZP_TOOL_PROFILES` holds the mapping.
+Everything is allowed by default. Apps listed in a profile map are narrowed
+to that profile's tools; every other app gets all the tools the user has.
+On Gateway B, `gateway-b-azp-tool-filter` (`modules/caller-tool-filter.ts`)
+keys on the token's `azp` claim, mapped in `AZP_TOOL_PROFILES`.
 
 | Caller | Linear tools |
 |---|---|
 | The user (Linear directly, or Gateway A) | Everything their Linear role allows, 81 tools including deletes |
 | Foundry agent (`azp` `772f3f72-…`) | 15 read-only tools |
 | Demo Agent (`azp` `e9bba71e-…`) | 15 read-only tools ("read-write" profile available: adds `save_issue`, `save_comment`, `save_document`, never deletes) |
-| Any other app | No tools |
+| Any other app | Everything the user has (not narrowed) |
 
-Hidden tools are removed from `tools/list`, and calling one returns JSON-RPC
-`-32601 Method not found` before the request reaches Linear. The upstream
+For a narrowed app, hidden tools are removed from `tools/list`, and calling
+one returns JSON-RPC `-32601` before the request reaches Linear. The upstream
 Linear token keeps the user's full rights, so agents must reach Linear only
 through the gateway.
 
-`sse-tools-list-filter` exists because the capability filter only rewrites
-JSON list responses and Linear always answers `tools/list` with SSE.
+This is a custom policy rather than Zuplo's MCP Capability Filter. That
+policy only narrows a fixed tool catalog (with no catalog it doesn't filter at
+all), so it can't express allow-by-default, and it only rewrites JSON
+responses while Linear answers `tools/list` with SSE.
 
 ## Per-app limits on Gateway A with CIMD
 
@@ -54,8 +57,8 @@ Gateway A issues its own tokens, so there is no Entra `azp`. Instead
 | Caller | Linear tools (tested live) |
 |---|---|
 | Demo Agent via CIMD (GitHub URL) | 18: read-write profile |
-| Any DCR client | 15: read-only profile |
-| Unlisted CIMD client | None |
+| Any DCR client (`dcr:*` entry) | 15: read-only profile |
+| Unlisted client | All 81 (not narrowed) |
 
 Demo: `CIMD_CLIENT_ID=<metadata URL> node scripts/dcr-client.mjs tools/list`
 versus the same command without `CIMD_CLIENT_ID`.

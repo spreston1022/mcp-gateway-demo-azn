@@ -3,7 +3,6 @@ import {
   type ZuploContext,
   type ZuploRequest,
 } from "@zuplo/runtime";
-import type { AllowedCapabilities } from "@zuplo/runtime/mcp-gateway";
 
 const READ_TOOLS = [
   // Synthetic tool from connect-fallback-inbound, shown only until the user
@@ -26,9 +25,8 @@ const READ_TOOLS = [
   "search_documentation",
 ];
 
-// Which Linear tools each kind of calling app may use. No profile includes
-// delete tools, so an agent can never do everything the user can. The
-// capability filter also clamps these to its `tools` catalog in policies.json.
+// Profiles that narrow what a listed app may do. Neither includes delete
+// tools. Apps without a profile are not narrowed.
 export const PROFILES: Record<string, string[]> = {
   "read-only": READ_TOOLS,
   "read-write": [...READ_TOOLS, "save_issue", "save_comment", "save_document"],
@@ -51,23 +49,23 @@ const SOURCES: Record<CallerSource, { claim: string; env: string }> = {
 };
 
 /**
- * Returns the Linear tools the calling app may use. The user's own Linear
- * permissions still apply upstream; this caps what each app can do on their
- * behalf. Profile maps are JSON, e.g. {"<client-id>": "read-only"}. Unknown
- * apps get no tools.
+ * Returns the Linear tools the calling app is limited to, or null when the app
+ * has no profile and may use every tool. The user's own Linear permissions
+ * still apply upstream. Profile maps are JSON, e.g. {"<client-id>":
+ * "read-only"}. A profile name that doesn't exist allows no tools.
  */
 export function allowedTools(
   request: ZuploRequest,
   context: ZuploContext,
   source: CallerSource = "azp",
-): string[] {
+): string[] | null {
   const { claim, env } = SOURCES[source];
   const caller = request.user?.data?.[claim];
   let profiles: Record<string, string> = {};
   try {
     profiles = JSON.parse(environment[env] ?? "{}");
   } catch {
-    context.log.error(`${env} is not valid JSON; allowing no tools`);
+    context.log.error(`${env} is not valid JSON; no apps are narrowed`);
   }
   let profile = typeof caller === "string" ? profiles[caller] : undefined;
   if (profile === undefined && typeof caller === "string" && caller.startsWith("dcr:")) {
@@ -81,21 +79,6 @@ export function allowedTools(
     // Lists the configured callers when none matched, to spot stale config.
     ...(profile === undefined && { configuredCallers: Object.keys(profiles) }),
   });
-  return profile ? (PROFILES[profile] ?? []) : [];
-}
-
-// Capability filter resolver for Gateway B (accessControl.mode "function").
-export default function azpToolAccess(
-  request: ZuploRequest,
-  context: ZuploContext,
-): AllowedCapabilities {
-  return { tools: allowedTools(request, context, "azp") };
-}
-
-// Capability filter resolver for Gateway A.
-export function clientIdToolAccess(
-  request: ZuploRequest,
-  context: ZuploContext,
-): AllowedCapabilities {
-  return { tools: allowedTools(request, context, "clientId") };
+  if (profile === undefined) return null;
+  return PROFILES[profile] ?? [];
 }

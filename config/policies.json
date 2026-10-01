@@ -16,47 +16,10 @@
     },
     {
       "name": "gateway-a-client-tool-filter",
-      "policyType": "mcp-capability-filter-inbound",
-      "handler": {
-        "export": "McpCapabilityFilterInboundPolicy",
-        "module": "$import(@zuplo/runtime/mcp-gateway)",
-        "options": {
-          "tools": [
-            "list_issues",
-            "get_issue",
-            "list_comments",
-            "list_projects",
-            "get_project",
-            "list_teams",
-            "get_team",
-            "list_users",
-            "get_user",
-            "list_issue_statuses",
-            "list_issue_labels",
-            "list_cycles",
-            "list_documents",
-            "get_document",
-            "search_documentation",
-            "save_issue",
-            "save_comment",
-            "save_document"
-          ],
-          "accessControl": {
-            "mode": "function",
-            "identifier": {
-              "module": "$import(./modules/azp-tool-access)",
-              "export": "clientIdToolAccess"
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "gateway-a-sse-tools-list-filter",
       "policyType": "custom-code-inbound",
       "handler": {
         "export": "default",
-        "module": "$import(./modules/sse-tools-list-filter)",
+        "module": "$import(./modules/caller-tool-filter)",
         "options": {
           "source": "clientId"
         }
@@ -91,48 +54,10 @@
     },
     {
       "name": "gateway-b-azp-tool-filter",
-      "policyType": "mcp-capability-filter-inbound",
-      "handler": {
-        "export": "McpCapabilityFilterInboundPolicy",
-        "module": "$import(@zuplo/runtime/mcp-gateway)",
-        "options": {
-          "tools": [
-            "list_issues",
-            "get_issue",
-            "list_comments",
-            "list_projects",
-            "get_project",
-            "list_teams",
-            "get_team",
-            "list_users",
-            "get_user",
-            "list_issue_statuses",
-            "list_issue_labels",
-            "list_cycles",
-            "list_documents",
-            "get_document",
-            "search_documentation",
-            "save_issue",
-            "save_comment",
-            "save_document",
-            "connect_linear"
-          ],
-          "accessControl": {
-            "mode": "function",
-            "identifier": {
-              "module": "$import(./modules/azp-tool-access)",
-              "export": "default"
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "gateway-b-sse-tools-list-filter",
       "policyType": "custom-code-inbound",
       "handler": {
         "export": "default",
-        "module": "$import(./modules/sse-tools-list-filter)",
+        "module": "$import(./modules/caller-tool-filter)",
         "options": {
           "source": "azp"
         }
