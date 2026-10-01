@@ -167,6 +167,6 @@ Set `GATEWAY_URL` to the live gateway; the default is `http://localhost:9000`.
 | Zuplo MCP Foundry Agent | `772f3f72-…` | Foundry's OAuth identity passthrough client |
 
 Foundry: project `spreston1022-8622` (resource group `rg-spreston1022-2524`),
-model `gpt-4.1-mini` (Global Standard, 100K TPM; spend is capped at the Zuplo AI Gateway), agent `linear-assistant`
+model `gpt-4.1-mini` (Global Standard, 200K TPM; spend is capped at the Zuplo AI Gateway), agent `linear-assistant`
 with the `linear-via-zuplo-gateway-b` MCP tool. Budget `mcp-demo-10usd`
 emails at $5 and $10. Delete the resource group when the demo is over.
