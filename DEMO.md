@@ -4,15 +4,17 @@ Live gateway: `https://mcp-gateway-demo-azn-main-95fac44.zuplo.app`
 (Zuplo account `demos`, project `mcp-gateway-demo-azn`, deploys from `main`).
 
 Both routes proxy Linear's remote MCP server (`https://mcp.linear.app/mcp`) and
-store each user's Linear token in the gateway vault, keyed by the user's Entra
-identity. A user who connects Linear through one route is connected on both.
+store each user's Linear token in the gateway vault, keyed by the user's
+subject. Entra issues a different `sub` per application, and the two gateways
+use different Entra apps, so a user connects Linear separately for each
+gateway.
 
 | | Gateway A: `/mcp-a/linear` | Gateway B: `/mcp-b/linear` |
 |---|---|---|
 | Client registration | Dynamic Client Registration (DCR) or CIMD with the gateway | Pre-registered app in Entra ID |
 | Token the client sends | Gateway-issued, opaque | Entra ID v2 access token |
 | Browser login | Gateway delegates to Entra | Entra directly |
-| Tool limits per calling app | Not possible (no `azp` in gateway tokens) | Yes, by the token's `azp` claim |
+| Tool limits per calling app | Only by `request.user.data.clientId`: random per DCR registration, stable for CIMD clients (untested) | Yes, by the token's `azp` claim |
 | Inbound policy | `mcp-entra-oauth-inbound` | `open-id-jwt-auth-inbound` |
 
 ## Agents act with narrower permissions than the user
