@@ -73,7 +73,14 @@ export function allowedTools(
   if (profile === undefined && typeof caller === "string" && caller.startsWith("dcr:")) {
     profile = profiles["dcr:*"];
   }
-  context.log.info({ event: "mcp_caller_tool_access", source, caller: caller ?? null, profile: profile ?? null });
+  context.log.info({
+    event: "mcp_caller_tool_access",
+    source,
+    caller: caller ?? null,
+    profile: profile ?? null,
+    // Lists the configured callers when none matched, to spot stale config.
+    ...(profile === undefined && { configuredCallers: Object.keys(profiles) }),
+  });
   return profile ? (PROFILES[profile] ?? []) : [];
 }
 
