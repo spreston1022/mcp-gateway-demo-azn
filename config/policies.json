@@ -1,3 +1,97 @@
 {
-  "policies": []
+  "policies": [
+    {
+      "name": "gateway-a-entra-oauth",
+      "policyType": "mcp-entra-oauth-inbound",
+      "handler": {
+        "export": "McpEntraOAuthInboundPolicy",
+        "module": "$import(@zuplo/runtime/mcp-gateway)",
+        "options": {
+          "tenantId": "$env(ENTRA_TENANT_ID)",
+          "clientId": "$env(GATEWAY_A_CLIENT_ID)",
+          "clientSecret": "$env(GATEWAY_A_CLIENT_SECRET)",
+          "scope": "openid profile email offline_access"
+        }
+      }
+    },
+    {
+      "name": "gateway-b-entra-jwt",
+      "policyType": "open-id-jwt-auth-inbound",
+      "handler": {
+        "export": "OpenIdJwtInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "issuer": "https://login.microsoftonline.com/$env(ENTRA_TENANT_ID)/v2.0",
+          "audience": "$env(GATEWAY_B_API_CLIENT_ID)",
+          "jwkUrl": "https://login.microsoftonline.com/$env(ENTRA_TENANT_ID)/discovery/v2.0/keys",
+          "allowUnauthenticatedRequests": false
+        }
+      }
+    },
+    {
+      "name": "gateway-b-azp-tool-filter",
+      "policyType": "mcp-capability-filter-inbound",
+      "handler": {
+        "export": "McpCapabilityFilterInboundPolicy",
+        "module": "$import(@zuplo/runtime/mcp-gateway)",
+        "options": {
+          "tools": [
+            "list_issues",
+            "get_issue",
+            "list_comments",
+            "list_projects",
+            "get_project",
+            "list_teams",
+            "get_team",
+            "list_users",
+            "get_user",
+            "list_issue_statuses",
+            "list_issue_labels",
+            "list_cycles",
+            "list_documents",
+            "get_document",
+            "search_documentation",
+            "save_issue",
+            "save_comment",
+            "save_document"
+          ],
+          "accessControl": {
+            "mode": "function",
+            "identifier": {
+              "module": "$import(./modules/azp-tool-access)",
+              "export": "default"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "gateway-b-sse-tools-list-filter",
+      "policyType": "custom-code-inbound",
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/sse-tools-list-filter)",
+        "options": {}
+      }
+    },
+    {
+      "name": "linear-token-exchange",
+      "policyType": "mcp-token-exchange-inbound",
+      "handler": {
+        "export": "McpTokenExchangeInboundPolicy",
+        "module": "$import(@zuplo/runtime/mcp-gateway)",
+        "options": {
+          "id": "linear",
+          "displayName": "Linear",
+          "summary": "Linear's remote MCP server, connected per user.",
+          "protectedResourceMetadataUrl": "https://mcp.linear.app/.well-known/oauth-protected-resource",
+          "authMode": "user-oauth",
+          "scopes": [],
+          "clientRegistration": {
+            "mode": "auto"
+          }
+        }
+      }
+    }
+  ]
 }

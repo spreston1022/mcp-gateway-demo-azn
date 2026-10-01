@@ -2,7 +2,56 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "My Zuplo API"
+    "title": "MCP Gateway Demo"
   },
-  "paths": {}
+  "paths": {
+    "/mcp-a/linear": {
+      "get,post": {
+        "operationId": "linear-gateway-a",
+        "summary": "Linear MCP (Gateway A: gateway-issued OAuth with DCR)",
+        "description": "MCP clients register and sign in through the gateway's own OAuth authorization server (DCR and CIMD), which delegates browser login to Entra ID. Each user connects their own Linear account once; the gateway stores and refreshes that token.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "module": "$import(@zuplo/runtime/mcp-gateway)",
+            "export": "McpProxyHandler",
+            "options": {
+              "rewritePattern": "https://mcp.linear.app/mcp"
+            }
+          },
+          "policies": {
+            "inbound": [
+              "gateway-a-entra-oauth",
+              "linear-token-exchange"
+            ]
+          }
+        }
+      }
+    },
+    "/mcp-b/linear": {
+      "get,post": {
+        "operationId": "linear-gateway-b",
+        "summary": "Linear MCP (Gateway B: Entra access tokens, no DCR)",
+        "description": "Clients send an Entra ID access token issued for the gateway's API. The gateway validates it directly (no gateway-issued tokens, no DCR), limits Linear tools by the token's azp claim (the calling app), and uses the user's own stored Linear token upstream.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "module": "$import(@zuplo/runtime/mcp-gateway)",
+            "export": "McpProxyHandler",
+            "options": {
+              "rewritePattern": "https://mcp.linear.app/mcp"
+            }
+          },
+          "policies": {
+            "inbound": [
+              "gateway-b-entra-jwt",
+              "gateway-b-azp-tool-filter",
+              "gateway-b-sse-tools-list-filter",
+              "linear-token-exchange"
+            ]
+          }
+        }
+      }
+    }
+  }
 }

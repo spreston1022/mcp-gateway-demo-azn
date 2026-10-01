@@ -9,3 +9,6 @@ node_modules/
 # OS Stuff
 
 .DS_Store
+
+# Local demo agent token cache
+.demo-agent-token.json
