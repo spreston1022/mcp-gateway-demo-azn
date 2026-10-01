@@ -55,6 +55,9 @@
               "gateway-b-connect-fallback",
               "gateway-b-azp-tool-filter",
               "linear-token-exchange"
+            ],
+            "outbound": [
+              "gateway-b-sse-to-json"
             ]
           }
         }

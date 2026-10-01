@@ -52,28 +52,6 @@ const SOURCES: Record<CallerSource, { claim: string; env: string }> = {
 };
 
 /**
- * Returns the Linear tools the signed-in user is limited to by their roles, or
- * null when none of their roles is mapped and they aren't narrowed. Roles come
- * from the identity provider (on Gateway A, the Entra app roles in the user's
- * ID token). USER_ROLE_PROFILES maps role to profile, e.g. {"Linear.Read":
- * "read-only"}. A user with several mapped roles gets the union of them.
- */
-export function userAllowedTools(request: ZuploRequest, context: ZuploContext): string[] | null {
-  const roles = request.user?.data?.roles;
-  const userRoles = Array.isArray(roles) ? roles.filter((r): r is string => typeof r === "string") : [];
-  let roleProfiles: Record<string, string> = {};
-  try {
-    roleProfiles = JSON.parse(environment.USER_ROLE_PROFILES ?? "{}");
-  } catch {
-    context.log.error("USER_ROLE_PROFILES is not valid JSON; no users are narrowed");
-  }
-  const profiles = userRoles.map((r) => roleProfiles[r]).filter((p): p is string => p !== undefined);
-  context.log.info({ event: "mcp_user_tool_access", roles: userRoles, profiles });
-  if (profiles.length === 0) return null;
-  return [...new Set(profiles.flatMap((p) => PROFILES[p] ?? []))];
-}
-
-/**
  * Returns the Linear tools the calling app is limited to, or null when the app
  * has no profile and may use every tool. The user's own Linear permissions
  * still apply upstream. Profile maps are JSON, e.g. {"<client-id>":
@@ -108,8 +86,16 @@ export function allowedTools(
   return PROFILES[profile] ?? [];
 }
 
-// Capability filter resolver for Gateway A (accessControl.mode "function").
-// Apps without a profile get {} and keep the filter's full tool catalog.
+// Capability filter resolvers (accessControl.mode "function"). Apps without a
+// profile get {} and keep the filter's full tool catalog.
+export default function azpToolAccess(
+  request: ZuploRequest,
+  context: ZuploContext,
+): AllowedCapabilities {
+  const tools = allowedTools(request, context, "azp");
+  return tools === null ? {} : { tools };
+}
+
 export function clientIdToolAccess(
   request: ZuploRequest,
   context: ZuploContext,

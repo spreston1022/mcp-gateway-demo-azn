@@ -21,7 +21,8 @@ gateway.
 
 Everything is allowed by default. Apps listed in a profile map are narrowed
 to that profile's tools; every other app gets all the tools the user has.
-On Gateway B, `gateway-b-azp-tool-filter` (`modules/caller-tool-filter.ts`)
+On Gateway B, `gateway-b-azp-tool-filter` (Zuplo's MCP Capability Filter in
+`function` mode, resolver `azpToolAccess` in `modules/azp-tool-access.ts`)
 keys on the token's `azp` claim, mapped in `AZP_TOOL_PROFILES`.
 
 | Caller | Linear tools |
@@ -36,10 +37,13 @@ one returns JSON-RPC `-32601` before the request reaches Linear. The upstream
 Linear token keeps the user's full rights, so agents must reach Linear only
 through the gateway.
 
-This is a custom policy rather than Zuplo's MCP Capability Filter. That
-policy only narrows a fixed tool catalog (with no catalog it doesn't filter at
-all), so it can't express allow-by-default, and it only rewrites JSON
-responses while Linear answers `tools/list` with SSE.
+Both gateways use the same pattern. The Capability Filter only narrows a fixed
+tool catalog, so its `tools` list holds all 81 Linear tools (plus
+`connect_linear` on Gateway B) with Linear's read-only and destructive hints;
+apps without a profile keep the whole catalog. It also only rewrites JSON, and
+Linear answers `tools/list` with SSE, so each route has an outbound
+`gateway-{a,b}-sse-to-json` policy that converts single-message SSE responses
+to JSON before the filter's response hook runs.
 
 ## Per-app limits on Gateway A with CIMD
 
