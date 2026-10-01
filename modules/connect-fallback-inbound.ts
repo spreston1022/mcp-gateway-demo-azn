@@ -26,7 +26,7 @@ interface JsonRpcMessage {
   jsonrpc?: string;
   id?: string | number | null;
   method?: string;
-  params?: { protocolVersion?: string };
+  params?: { protocolVersion?: string; name?: string };
 }
 
 export default async function connectFallback(
@@ -47,10 +47,30 @@ export default async function connectFallback(
   }
 
   const { toolName, serviceName } = options;
+  const isConnectCall = message.method === "tools/call" && message.params?.name === toolName;
   context.addResponseSendingHook(async (response) => {
-    if (!response.headers.get("content-type")?.includes("application/json")) {
-      return response;
+    const isJson = response.headers.get("content-type")?.includes("application/json");
+    // Clients that cache the tool list (Foundry does, per conversation) may
+    // call the connect tool after the user has connected. The upstream doesn't
+    // know the tool, so answer it here.
+    if (isConnectCall && !(isJson && (await isConnectRequired(response)))) {
+      return new Response(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: message.id,
+          result: {
+            content: [
+              {
+                type: "text",
+                text: `${serviceName} is connected. Start a new conversation so the ${serviceName} tools load, then ask again.`,
+              },
+            ],
+          },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      );
     }
+    if (!isJson) return response;
     let body: { error?: { code?: number; data?: { connectRequired?: { authUrl?: string } } } };
     try {
       body = await response.clone().json();
@@ -100,7 +120,6 @@ export default async function connectFallback(
                 : `${serviceName} isn't connected for this user, and no connect link was available. Ask the user to try again.`,
             },
           ],
-          isError: true,
         });
       case "ping":
         return reply({});
@@ -115,4 +134,13 @@ export default async function connectFallback(
     }
   });
   return request;
+}
+
+async function isConnectRequired(response: Response): Promise<boolean> {
+  try {
+    const body = await response.clone().json();
+    return body?.error?.code === -32042;
+  } catch {
+    return false;
+  }
 }
