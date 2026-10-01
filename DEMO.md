@@ -56,6 +56,7 @@ Gateway A issues its own tokens, so there is no Entra `azp`. Instead
 
 | Caller | Linear tools (tested live) |
 |---|---|
+| claude.ai (`https://claude.ai/oauth/mcp-oauth-client-metadata`) | 15: read-only profile |
 | Demo Agent via CIMD (GitHub URL) | 18: read-write profile |
 | Any DCR client (`dcr:*` entry) | 15: read-only profile |
 | Unlisted client | All 81 (not narrowed) |
