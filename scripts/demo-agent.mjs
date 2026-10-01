@@ -63,7 +63,8 @@ async function interactiveLogin() {
       q.get("code") ? resolve(q.get("code")) : reject(new Error(q.get("error_description") ?? "no code"));
     }).listen(8400);
     console.error(`Opening browser to sign in...\n${url}\n`);
-    exec(`open "${url}"`);
+    if (process.env.PRINT_AUTH_URL) console.error(`AUTH_URL ${url}`);
+    else exec(`open "${url}"`);
   });
   return tokenRequest({ grant_type: "authorization_code", code, redirect_uri: redirectUri, code_verifier: verifier });
 }

@@ -145,6 +145,8 @@ listed.
 
 - `node scripts/demo-agent.mjs [tools/list | call <tool> '<json>']`: signs in
   through Entra as the Demo Agent and calls Gateway B.
+- Set `PRINT_AUTH_URL=1` on either script to print the sign-in URL instead of
+  opening it.
 - `node scripts/dcr-client.mjs [tools/list | call …]`: discovers Gateway A,
   registers with DCR (or uses CIMD when `CIMD_CLIENT_ID` is set), signs in,
   and calls it.

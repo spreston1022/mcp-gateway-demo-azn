@@ -66,7 +66,8 @@ const code = await new Promise((resolve, reject) => {
     q.get("code") ? resolve(q.get("code")) : reject(new Error(q.get("error_description") ?? q.get("error") ?? "no code"));
   }).listen(new URL(redirectUri).port);
   console.error("Opening browser to sign in...");
-  exec(`open "${authUrl}"`);
+  if (process.env.PRINT_AUTH_URL) console.error(`AUTH_URL ${authUrl}`);
+  else exec(`open "${authUrl}"`);
 });
 
 // 4. Token exchange
