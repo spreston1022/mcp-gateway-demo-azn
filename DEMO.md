@@ -49,8 +49,11 @@ Gateway A issues its own tokens, so there is no Entra `azp`. Instead
 
 - CIMD clients use an HTTPS URL to their metadata document as `client_id`. The
   URL is the same for every user and install, so it identifies the app. The
-  demo document is `clients/demo-agent.json`, served from GitHub raw (the
-  gateway can't fetch a document from its own hostname).
+  demo document is `demo-agent.json` on the `gh-pages` branch, served at
+  `https://spreston1022.github.io/mcp-gateway-demo-azn/demo-agent.json`.
+  Gateway A can't fetch CIMD documents hosted on any `zuplo.app` hostname
+  (tested with its own host and a preview environment), so the document
+  lives outside Zuplo.
 - DCR clients get a random `dcr:…` ID per registration, so they can't be told
   apart. They all share the `dcr:*` profile.
 
