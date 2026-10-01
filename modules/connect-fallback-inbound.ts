@@ -1,4 +1,4 @@
-import type { ZuploContext, ZuploRequest } from "@zuplo/runtime";
+import { environment, type ZuploContext, type ZuploRequest } from "@zuplo/runtime";
 
 /**
  * Shows the "connect your account" link to MCP clients that don't support URL
@@ -12,14 +12,21 @@ import type { ZuploContext, ZuploRequest } from "@zuplo/runtime";
  * agent can show it in the chat. Once the user connects, requests pass
  * through untouched and the real tools appear.
  *
- * Place it before the capability filter and token-exchange policies, and add
- * the connect tool's name to the capability filter's `tools` catalog.
+ * It applies only to the client IDs listed in `clientIdsEnv`. Place it before
+ * the capability filter and token-exchange policies, and add the connect
+ * tool's name to the capability filter's `tools` catalog.
  */
 interface ConnectFallbackOptions {
   /** Name of the synthetic tool, e.g. "connect_linear". */
   toolName: string;
   /** Human-readable service name used in messages, e.g. "Linear". */
   serviceName: string;
+  /**
+   * Environment variable holding a comma-separated list of client IDs (the
+   * token's azp claim) that get the fallback. Other clients get the standard
+   * MCP connect-required response.
+   */
+  clientIdsEnv: string;
 }
 
 interface JsonRpcMessage {
@@ -36,6 +43,14 @@ export default async function connectFallback(
   policyName: string,
 ) {
   if (request.method !== "POST") return request;
+  // Only apps known to lack URL elicitation support get the fallback; every
+  // other client keeps the standard behavior.
+  const clientIds = (environment[options.clientIdsEnv] ?? "")
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+  const azp = request.user?.data?.azp;
+  if (typeof azp !== "string" || !clientIds.includes(azp)) return request;
   let message: JsonRpcMessage;
   try {
     const body = await request.clone().json();

@@ -36,7 +36,8 @@
         "module": "$import(./modules/connect-fallback-inbound)",
         "options": {
           "toolName": "connect_linear",
-          "serviceName": "Linear"
+          "serviceName": "Linear",
+          "clientIdsEnv": "CONNECT_FALLBACK_CLIENT_IDS"
         }
       }
     },
