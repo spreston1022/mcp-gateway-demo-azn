@@ -60,8 +60,8 @@ Gateway A issues its own tokens, so there is no Entra `azp`. Instead
 Demo: `CIMD_CLIENT_ID=<metadata URL> node scripts/dcr-client.mjs tools/list`
 versus the same command without `CIMD_CLIENT_ID`.
 
-Changing a variable needs a deploy with a new file tree; an empty commit
-reused the old build and kept the old value. When no profile matches, the
+After changing a variable, an empty-commit deploy kept the old value here;
+a commit with real changes picked it up. When no profile matches, the
 `mcp_caller_tool_access` log lists `configuredCallers`.
 
 ## Connecting Linear from clients without URL elicitation
