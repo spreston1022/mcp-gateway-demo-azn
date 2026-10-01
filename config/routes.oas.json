@@ -45,6 +45,7 @@
           "policies": {
             "inbound": [
               "gateway-b-entra-jwt",
+              "gateway-b-connect-fallback",
               "gateway-b-azp-tool-filter",
               "gateway-b-sse-tools-list-filter",
               "linear-token-exchange"

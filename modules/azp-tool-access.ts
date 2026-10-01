@@ -6,6 +6,9 @@ import {
 import type { AllowedCapabilities } from "@zuplo/runtime/mcp-gateway";
 
 const READ_TOOLS = [
+  // Synthetic tool from connect-fallback-inbound, shown only until the user
+  // connects Linear.
+  "connect_linear",
   "list_issues",
   "get_issue",
   "list_comments",

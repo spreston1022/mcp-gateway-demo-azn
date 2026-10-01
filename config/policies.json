@@ -29,6 +29,18 @@
       }
     },
     {
+      "name": "gateway-b-connect-fallback",
+      "policyType": "custom-code-inbound",
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/connect-fallback-inbound)",
+        "options": {
+          "toolName": "connect_linear",
+          "serviceName": "Linear"
+        }
+      }
+    },
+    {
       "name": "gateway-b-azp-tool-filter",
       "policyType": "mcp-capability-filter-inbound",
       "handler": {
@@ -53,7 +65,8 @@
             "search_documentation",
             "save_issue",
             "save_comment",
-            "save_document"
+            "save_document",
+            "connect_linear"
           ],
           "accessControl": {
             "mode": "function",
@@ -81,7 +94,7 @@
         "export": "McpTokenExchangeInboundPolicy",
         "module": "$import(@zuplo/runtime/mcp-gateway)",
         "options": {
-          "id": "linear",
+          "id": "linear-v2",
           "displayName": "Linear",
           "summary": "Linear's remote MCP server, connected per user.",
           "protectedResourceMetadataUrl": "https://mcp.linear.app/.well-known/oauth-protected-resource",
