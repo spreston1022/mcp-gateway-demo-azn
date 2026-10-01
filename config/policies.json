@@ -24,48 +24,96 @@
           "tools": [
             {
               "name": "get_attachment",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "prepare_attachment_upload",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "create_attachment_from_upload",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "create_attachment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "delete_attachment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_agent_skills",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_agent_skill",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_comments",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -74,6 +122,12 @@
             },
             {
               "name": "save_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Write",
                 "Linear.Admin"
@@ -81,12 +135,24 @@
             },
             {
               "name": "delete_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_cycles",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -95,12 +161,24 @@
             },
             {
               "name": "list_custom_views",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_document",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -109,6 +187,12 @@
             },
             {
               "name": "list_documents",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -117,6 +201,12 @@
             },
             {
               "name": "save_document",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Write",
                 "Linear.Admin"
@@ -124,12 +214,24 @@
             },
             {
               "name": "extract_images",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_issue",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -138,6 +240,12 @@
             },
             {
               "name": "list_issues",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -146,6 +254,12 @@
             },
             {
               "name": "save_issue",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Write",
                 "Linear.Admin"
@@ -153,6 +267,12 @@
             },
             {
               "name": "list_issue_statuses",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -161,12 +281,24 @@
             },
             {
               "name": "get_issue_status",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_issue_labels",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -175,30 +307,60 @@
             },
             {
               "name": "save_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "create_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "retire_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "restore_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_projects",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -207,6 +369,12 @@
             },
             {
               "name": "get_project",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -215,120 +383,240 @@
             },
             {
               "name": "save_project",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_project_labels",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "retire_project_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "restore_project_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_project_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_release_pipelines",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_releases",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_release",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_release",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_release_notes",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_release_note",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_release_note",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "share_issue",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "unshare_issue",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_milestones",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_milestone",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_milestone",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_notifications",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "mark_notification",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_teams",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -337,6 +625,12 @@
             },
             {
               "name": "get_team",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -345,24 +639,48 @@
             },
             {
               "name": "get_triage_responsibility",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_templates",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_template",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_users",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -371,6 +689,12 @@
             },
             {
               "name": "get_user",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -379,12 +703,24 @@
             },
             {
               "name": "get_workspace",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "search_documentation",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Read",
                 "Linear.Write",
@@ -393,150 +729,300 @@
             },
             {
               "name": "get_diff",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_diffs",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_diff_threads",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_diff_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "resolve_diff_thread",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": true,
+                "openWorldHint": true
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "delete_diff_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "submit_diff_review",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "update_diff",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "merge_diff",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_customers",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_customer",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "delete_customer",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_customer_need",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "delete_customer_need",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_initiatives",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_initiative",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_initiative",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "list_initiative_labels",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "create_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "retire_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "restore_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "get_status_updates",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "save_status_update",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
             },
             {
               "name": "delete_status_update",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              },
               "roles": [
                 "Linear.Admin"
               ]
@@ -557,87 +1043,735 @@
         "module": "$import(@zuplo/runtime/mcp-gateway)",
         "options": {
           "tools": [
-            "get_attachment",
-            "prepare_attachment_upload",
-            "create_attachment_from_upload",
-            "create_attachment",
-            "delete_attachment",
-            "list_agent_skills",
-            "get_agent_skill",
-            "list_comments",
-            "save_comment",
-            "delete_comment",
-            "list_cycles",
-            "list_custom_views",
-            "get_document",
-            "list_documents",
-            "save_document",
-            "extract_images",
-            "get_issue",
-            "list_issues",
-            "save_issue",
-            "list_issue_statuses",
-            "get_issue_status",
-            "list_issue_labels",
-            "save_issue_label",
-            "create_issue_label",
-            "retire_issue_label",
-            "restore_issue_label",
-            "list_projects",
-            "get_project",
-            "save_project",
-            "list_project_labels",
-            "retire_project_label",
-            "restore_project_label",
-            "save_project_label",
-            "list_release_pipelines",
-            "list_releases",
-            "get_release",
-            "save_release",
-            "list_release_notes",
-            "get_release_note",
-            "save_release_note",
-            "share_issue",
-            "unshare_issue",
-            "list_milestones",
-            "get_milestone",
-            "save_milestone",
-            "get_notifications",
-            "mark_notification",
-            "list_teams",
-            "get_team",
-            "get_triage_responsibility",
-            "list_templates",
-            "get_template",
-            "list_users",
-            "get_user",
-            "get_workspace",
-            "search_documentation",
-            "get_diff",
-            "list_diffs",
-            "get_diff_threads",
-            "save_diff_comment",
-            "resolve_diff_thread",
-            "delete_diff_comment",
-            "submit_diff_review",
-            "update_diff",
-            "merge_diff",
-            "list_customers",
-            "save_customer",
-            "delete_customer",
-            "save_customer_need",
-            "delete_customer_need",
-            "list_initiatives",
-            "get_initiative",
-            "save_initiative",
-            "list_initiative_labels",
-            "save_initiative_label",
-            "create_initiative_label",
-            "retire_initiative_label",
-            "restore_initiative_label",
-            "get_status_updates",
-            "save_status_update",
-            "delete_status_update"
+            {
+              "name": "get_attachment",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "prepare_attachment_upload",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "create_attachment_from_upload",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "create_attachment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "delete_attachment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_agent_skills",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_agent_skill",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_comments",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "delete_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_cycles",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_custom_views",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_document",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_documents",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_document",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "extract_images",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_issue",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_issues",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_issue",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_issue_statuses",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_issue_status",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_issue_labels",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "create_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "retire_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "restore_issue_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_projects",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_project",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_project",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_project_labels",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "retire_project_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "restore_project_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_project_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_release_pipelines",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_releases",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_release",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_release",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_release_notes",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_release_note",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_release_note",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "share_issue",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "unshare_issue",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_milestones",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_milestone",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_milestone",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_notifications",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "mark_notification",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_teams",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_team",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_triage_responsibility",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_templates",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_template",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_users",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_user",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_workspace",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "search_documentation",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_diff",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_diffs",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_diff_threads",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_diff_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "resolve_diff_thread",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": true,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "delete_diff_comment",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "submit_diff_review",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "update_diff",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "merge_diff",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "list_customers",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_customer",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "delete_customer",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_customer_need",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "delete_customer_need",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_initiatives",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_initiative",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_initiative",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "list_initiative_labels",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "create_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "retire_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "restore_initiative_label",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "get_status_updates",
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "save_status_update",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            },
+            {
+              "name": "delete_status_update",
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": false
+              }
+            }
           ],
           "accessControl": {
             "mode": "function",
