@@ -129,7 +129,10 @@
         }
       }
     },
-    "/path-10": {
+    "/path-11": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
       "get": {
         "summary": "Echo a GET request",
         "description": "Returns the full details of the incoming GET request as JSON — headers, query parameters, URL, and method.",
