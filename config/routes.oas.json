@@ -135,7 +135,7 @@
       },
       "get": {
         "summary": "Echo a GET request",
-        "description": "Returns the full details of the incoming GET request as JSON — headers, query parameters, URL, and method.",
+        "description": "Returns the full details of the incoming GET request as JSON — headers, query parameters, URL, and method..",
         "operationId": "echo-get",
         "parameters": [
           {
